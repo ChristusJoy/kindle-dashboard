@@ -4,32 +4,28 @@ A simple dashboard web application for Kindle, featuring a to-do list, clock, me
 
 ## Features
 
+- Media controller
 - To-do list with unfinished and completed tasks
-- Clock, media, timer, and days left/quotes navigation
+- Clock, timer, and days left/quotes navigation
 - Simple, Kindle-friendly UI
 
-## Prerequisites
+## Setup kindle
 
-- [Python 3.x](https://www.python.org/downloads/) (if backend is Python-based)
-- [pip](https://pip.pypa.io/en/stable/installation/) (for Python dependencies)
-- A modern web browser
+1. Jailbreak and install KUAL -> https://kindlemodding.org/
 
-## Setup
+2. Get the browser to go fullscreen [kindle-kual-fullmesquite](https://github.com/mitchellurgero/kindle-kual-fullmesquite). If you are on 5.16.4+, you could try [kindle-shortcut-browser](https://github.com/mitchellurgero/kindle-shortcut-browser) (Not tested). Big thank you to [Mitchell Urgero](https://github.com/mitchellurgero) :)
 
-1. **Clone the repository:**
-   ```sh
-   git clone <repo-url>
-   cd kindle-dashboard
-   ```
+3. If you plan on using the media controller or the todo widgets, then you need to setup a local server on your computer which can be polled from the dashboard.
 
-2. **Install backend dependencies:**
-   If there is a `requirements.txt` file:
+
+4. **Install backend dependencies:**
+   To download the requirements run:
    ```sh
    pip install -r requirements.txt
    ```
 
 3. **Start the backend server:**
-   If using Flask or similar, run:
+   Run to start the server:
    ```sh
    python backend/app.py
    ```
@@ -37,41 +33,25 @@ A simple dashboard web application for Kindle, featuring a to-do list, clock, me
 
 4. **Serve the frontend:**
    - The frontend files are in the `frontend/` directory.
-   - You can open `frontend/index.html` directly in your browser, or use a simple HTTP server:
+   - Use a hosting service(like vercel) if you want the dashboard running when your computer is switched off.
+   - Or use a simple HTTP server:
      ```sh
      cd frontend
      python -m http.server 8000
      ```
-     Then visit [http://localhost:8000](http://localhost:8000) in your browser.
+     Then visit url in your kindle browser.
 
 ## Configuration
 
-- Ensure the `BASE_URL` variable in your frontend JavaScript points to your backend server's address (e.g., `http://localhost:5000`).
+- Ensure the `BASE_URL` variable in your frontend JavaScript points to your backend flask server's address (e.g., `http://localhost:8080`).
 
-## File Structure
-
-```
-kindle-dashboard/
-├── backend/         # Backend server code (API)
-├── frontend/        # Frontend HTML, CSS, JS, images
-│   ├── index.html
-│   ├── todo.html
-│   ├── todo.css
-│   └── images/
-└── README.md
-```
-
-## Usage
-
-- Navigate using the icons at the top of each page.
-- Use the to-do list to track tasks. Click a task to toggle its completion status.
-- Use the "Reset" button to clear all tasks.
 
 ## Notes
 
-- For best results, use on a Kindle device or in a browser with a similar display size.
-- If you encounter issues, check your browser's console and backend server logs for errors.
+- Media controls use playerctl which does not have windows support 
+- Only tested with kindle paperwhite 4th gen
+- Feel free to contribute 
 
 ## License
 
-MIT License (or specify your license here).
+MIT License.
