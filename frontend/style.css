@@ -1,0 +1,92 @@
+#nav {
+  padding: 10px;
+  margin-top: 50px;
+  text-align: center;
+  font-size: 40px;
+}
+
+
+#nav a {
+  text-decoration: none;
+  font-size: 60px;
+  display: inline-block;
+  margin: 0 50px;
+}
+
+#clock-all {
+  text-align: center;
+}
+
+
+
+#clock,
+#date {
+  text-align: center;
+  font-size: 48px;
+  margin-top: 10px;
+}
+
+#clock {
+  margin-top: 225px;
+  font-size: 350px;
+}
+
+#date {
+  font-size: 50px;
+  color: #333;
+}
+
+
+.ampm {
+  font-size: 25%;
+}
+
+#date-row {
+  white-space: nowrap;
+}
+
+#date,
+#date-row a {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+#days{
+  text-align: center;
+  white-space: nowrap;
+  padding:50px;
+  font-size:40px;
+}
+
+#weekdays {
+  display: inline-block;
+  vertical-align: middle;
+  border: 3px solid #000000;
+  border-radius: 15px;
+  padding:20px 
+  
+  
+}
+#calendar-icon{
+  vertical-align: middle;
+  display: inline-block;
+  padding-left: 30px;
+  
+}
+
+.day-box {
+  display: inline-block;  
+  text-align: center;
+  padding:10px
+  
+}
+.day-box.today {
+  background-color: black;
+  border-radius: 10px;
+  color: white;
+  border: 2px solid #000;
+}
+
+
+

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kindle Dashboard</title>
+  <link rel="stylesheet" href="todo.css">
+</head>
+
+<body>
+
+  <!-- Navigation Buttons -->
+  <div id="nav">
+    <a href="/index.html"><img src="/images/clock.png" alt="Clock" width="80"></a>
+    <a href="/media.html"><img src="/images/musical-note.png" alt="Media" width="80"></a>
+    <a href="/timer.html"><img src="/images/bell.png" alt="Timer" width="80"></a>
+    <a href="/daysleft.html"><img src="/images/hourglass.png" alt="Quotes" width="80"></a>
+    <a href="/todo.html"><img src="/images/to-do-list.png" alt="To-do" width="140"></a>
+  </div>
+
+ 
+  <h2>Unfinished</h2>
+  <ul id="unfinished"></ul>
+
+  <h2>Completed</h2>
+  <ul id="completed"></ul>
+
+  <button onclick="resetTasks()">Reset</button>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+      function fetchTasks() {
+        var xhr = new XMLHttpRequest();
+        var url = BASE_URL + '/todo?nocache=' + new Date().getTime();
+        xhr.open('GET', url, true);
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+              try {
+                var data = JSON.parse(xhr.responseText);
+                var unfinishedEl = document.getElementById('unfinished');
+                var completedEl = document.getElementById('completed');
+                unfinishedEl.innerHTML = '';
+                completedEl.innerHTML = '';
+
+                for (var i = 0; i < data.unfinished.length; i++) {
+                  (function (task) {
+                    var li = document.createElement('li');
+                    li.textContent = task;
+                    li.onclick = function () {
+                      toggleTask(task);
+                    };
+                    unfinishedEl.appendChild(li);
+                  })(data.unfinished[i]);
+                }
+
+                for (var j = 0; j < data.completed.length; j++) {
+                  (function (task) {
+                    var li = document.createElement('li');
+                    li.textContent = task;
+                    if (li.classList && li.classList.add) {
+                      li.classList.add('completed');
+                    } else {
+                      li.className += ' completed';
+                    }
+                    li.onclick = function () {
+                      toggleTask(task);
+                    };
+                    completedEl.appendChild(li);
+                  })(data.completed[j]);
+                }
+              } catch (e) {
+                console.log('Error parsing JSON:', e);
+              }
+            } else {
+              console.log('Failed to load tasks. Status:', xhr.status);
+            }
+          }
+        };
+        xhr.send();
+      }
+
+      function toggleTask(task) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', BASE_URL+'/toggle', true);
+        xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            fetchTasks();
+          }
+        };
+        xhr.send(JSON.stringify({ task: task }));
+      }
+
+      function resetTasks() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', BASE_URL+'/reset', true);
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            fetchTasks();
+          }
+        };
+        xhr.send();
+      }
+
+      // Initial load
+      fetchTasks();
+
+      // Expose globally for the button
+      window.resetTasks = resetTasks;
+    });
+  </script>
+
+</body>
+
+</html>

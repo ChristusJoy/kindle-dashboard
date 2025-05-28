@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Days Left Tracker</title>
+  <link rel="stylesheet" href="daysleft.css">
+
+</head>
+<body>
+  <div id="nav">
+    <a href="/index.html"><img src="/images/clock.png" alt="Clock" width="80"></a>
+    <a href="/media.html"><img src="/images/musical-note.png" alt="Media" width="80"></a>
+    <a href="/timer.html"><img src="/images/bell.png" alt="Timer" width="80"></a>
+    <a href="/daysleft.html"><img src="/images/hourglass.png" alt="Quotes" width="140"></a>
+    <a href="/todo.html"><img src="/images/to-do-list.png" alt="To-do" width="80"></a>
+  </div>
+  <br><br><br>
+  <div id="progress-tracker">
+    <div class="section">
+    <div class="label"><span id="days-left-month" class="count"></span> days left in the month. </div>
+    <div class="progress-container">
+      <div id="progress-month" class="progress-bar"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="label"><span id="days-left-year" class="count"></span> days left in this year. </div>
+    <div class="progress-container">
+      <div id="progress-year" class="progress-bar"></div>
+    </div>
+  </div>
+  </div>
+  
+
+  <script>
+    function updateProgress() {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = today.getMonth();
+      const day = today.getDate();
+
+      // Days in month
+      const lastDayOfMonth = new Date(year, month + 1, 0).getDate();
+      const daysLeftMonth = lastDayOfMonth - day;
+      const monthProgress = ((day / lastDayOfMonth) * 100).toFixed(2);
+
+      // Days in year
+      const startOfYear = new Date(year, 0, 1);
+      const endOfYear = new Date(year, 11, 31);
+      const totalDaysYear = Math.ceil((endOfYear - startOfYear + 1) / (1000 * 60 * 60 * 24));
+      const dayOfYear = Math.ceil((today - startOfYear + 1) / (1000 * 60 * 60 * 24));
+      const daysLeftYear = totalDaysYear - dayOfYear;
+      const yearProgress = ((dayOfYear / totalDaysYear) * 100).toFixed(2);
+
+      // Update DOM
+      document.getElementById('days-left-month').textContent = daysLeftMonth;
+      document.getElementById('progress-month').style.width = monthProgress+'%';
+
+      document.getElementById('days-left-year').textContent = daysLeftYear;
+      document.getElementById('progress-year').style.width = yearProgress+'%';
+    }
+
+    updateProgress();
+  </script>
+</body>
+</html>

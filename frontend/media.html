@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kindle Dashboard</title>
+  <link rel="stylesheet" href="media.css">
+</head>
+
+<body>
+
+  <!-- Navigation Buttons -->
+  <div id="nav">
+    <a href="/index.html"><img src="/images/clock.png" alt="Clock" width="80"></a>
+    <a href="/media.html"><img src="/images/musical-note.png" alt="Media" width="140"></a>
+    <a href="/timer.html"><img src="/images/bell.png" alt="Timer" width="80"></a>
+    <a href="/daysleft.html"><img src="/images/hourglass.png" alt="Quotes" width="80"></a>
+    <a href="/todo.html"><img src="/images/to-do-list.png" alt="To-do" width="80"></a>
+  </div>
+
+
+
+  <div id="music-playback">
+    <div id="track-info">
+      <div id="track-image">
+        <img id="album-img" src="/images/album.png" alt="Album art" width="700" style="border-radius: 40px;">
+      </div>
+      <div id="track-title">
+        <div id="track-name">Track name</div>
+        <div id="artist">Artist</div>
+      </div>
+    </div>
+    <p> </p>
+    <div id="playback-control">
+      <div id="error" style="color: red;"></div>
+      <button onclick="sendCommand('/prev')"><img src="/images/previous.png" alt="Previous" width="120"></button>
+      <button onclick="sendCommand('/playpause')"><img id ='playPauseBtn' src="/images/play.png" alt="Play" width="120"></button>
+      <button onclick="sendCommand('/next')"><img src="/images/next.png" alt="Next" width="120"></button>
+    </div>
+  </div>
+  <script src="config.js"></script>
+  <script>
+    function fetchData() {
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', BASE_URL +'/data', true); 
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+          document.getElementById('error').textContent = '';
+          const data = JSON.parse(xhr.responseText);
+          document.getElementById('track-name').textContent = data.title || 'Unknown Title';
+          document.getElementById('artist').textContent = data.artist || 'Unknown Artist';
+          document.getElementById('album-img').src = data.art_url || '';
+          const btnIcon = document.getElementById('playPauseBtn');
+          const playbackStatus = data.status;
+          console.log('Playback Status:', playbackStatus);
+          if (playbackStatus == "Playing"){
+            btnIcon.src = '/images/pause.png';
+          }
+          else {
+            btnIcon.src = '/images/play.png';
+          }
+
+        }
+      };
+      xhr.onerror = function () {
+        document.getElementById('error').textContent = '';
+        document.getElementById('track-name').textContent = 'Media server is offline or unreachable.';
+        document.getElementById('artist').textContent = '';
+        document.getElementById('album-img').src = '/images/album.png';
+      };
+      xhr.send();
+    }
+
+    function sendCommand(endpoint) {
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', BASE_URL + endpoint, true);
+      xhr.onload = function () {
+        fetchData();
+      };
+      xhr.onerror = function () {
+        document.getElementById('error').textContent = 'Failed to send command to media server.';
+      };
+      xhr.send();
+    }
+
+    fetchData();
+    setInterval(fetchData, 1000);
+  </script>
+</body>
+
+</html>

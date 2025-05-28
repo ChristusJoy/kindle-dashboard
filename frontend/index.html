@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kindle Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Navigation Buttons -->
+  <div id="nav">
+    <a href="/index.html"><img src="/images/clock.png" alt="Clock" width="140"></a>
+    <a href="/media.html"><img src="/images/musical-note.png" alt="Media" width="80"></a>
+    <a href="/timer.html"><img src="/images/bell.png" alt="Timer" width="80"></a>
+    <a href="/daysleft.html"><img src="/images/hourglass.png" alt="Quotes" width="80"></a>
+    <a href="/todo.html"><img src="/images/to-do-list.png" alt="To-do" width="80"></a>
+  </div>
+
+
+  <div id="clock-all">
+    <div id="clock">Loading time...</div>
+    <div id="date-row">
+      <div id="date">Loading date...</div>
+    </div>
+
+    <div id="days">
+      <div id="weekdays">
+        <div class="day-box" id="Sun">Sun</div>
+        <div class="day-box" id="Mon">Mon</div>
+        <div class="day-box" id="Tue">Tue</div>
+        <div class="day-box" id="Wed">Wed</div>
+        <div class="day-box" id="Thu">Thu</div>
+        <div class="day-box" id="Fri">Fri</div>
+        <div class="day-box" id="Sat">Sat</div>
+      </div>
+
+      <div id="calendar-icon"><img src="/images/calendar.png" alt="To-do" width="90"></div>
+      
+    </div>
+  </div>
+
+
+
+  <script>
+    // Update the date
+    var now = new Date();
+    var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    var months = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+
+    var monthName = months[now.getMonth()];
+    var day = now.getDate();
+    var year = now.getFullYear();
+
+    var dateText = day + ' ' + monthName + ', ' + year;
+    document.getElementById('date').innerHTML = dateText;
+
+    // Update the clock every second
+    function updateClock() {
+      var now = new Date();
+
+      // Get time in UTC
+      var utcHours = now.getUTCHours();
+      var utcMinutes = now.getUTCMinutes();
+      var utcSeconds = now.getUTCSeconds();
+
+      // Convert to local time (adjusting for IST, UTC +5:30)
+      var localHours = utcHours + 5;  // Add 5 hours for IST
+      var localMinutes = utcMinutes + 30; // Add 30 minutes for IST
+
+      // Handle minute and hour overflow
+      if (localMinutes >= 60) {
+        localMinutes -= 60;
+        localHours += 1;
+      }
+      if (localHours >= 24) {
+        localHours -= 24;
+      }
+
+      var ampm = localHours >= 12 ? 'PM' : 'AM';
+      localHours = localHours % 12;
+      localHours = localHours ? localHours : 12; // 0 becomes 12
+      localMinutes = localMinutes < 10 ? '0' + localMinutes : localMinutes;
+      utcSeconds = utcSeconds < 10 ? '0' + utcSeconds : utcSeconds;
+
+      // Format the time
+      var timeText = localHours + ':' + localMinutes + '<span class="ampm">' + ampm + '</span>';
+      document.getElementById('clock').innerHTML = timeText;
+    }
+
+    updateClock();  // Initial clock display
+    setInterval(updateClock, 2000);  // Update every 2 seconds
+
+
+    const todayIndex = now.getDay(); // 0 = Sunday, 6 = Saturday
+    const todayId = days[todayIndex];
+    document.getElementById(todayId).classList.add("today");
+
+    document.getElementById('refreshBtn').addEventListener('click', function () {
+      location.reload();
+    });
+
+  </script>
+
+</body>
+
+</html>

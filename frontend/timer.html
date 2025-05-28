@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kindle Dashboard</title>
+  <link rel="stylesheet" href="timer.css">
+</head>
+
+<body>
+
+  <!-- Navigation Buttons -->
+  <div id="nav">
+    <a href="/index.html"><img src="/images/clock.png" alt="Clock" width="80"></a>
+    <a href="/media.html"><img src="/images/musical-note.png" alt="Media" width="80"></a>
+    <a href="/timer.html"><img src="/images/bell.png" alt="Timer" width="140"></a>
+    <a href="/daysleft.html"><img src="/images/hourglass.png" alt="Quotes" width="80"></a>
+    <a href="/todo.html"><img src="/images/to-do-list.png" alt="To-do" width="80"></a>
+  </div>
+
+  <h1 id="timer">00:00</h1>
+
+  <div id="time-buttons">
+    <button onclick="addMinutes(1)">+1m</button>
+    <button onclick="addMinutes(5)">+5m</button>
+    <button onclick="addMinutes(10)">+10m</button>
+    <br>
+    <button onclick="addMinutes(15)">+15m</button>
+    <button onclick="addMinutes(30)">+30m</button>
+    <button onclick="addMinutes(60)">+60m</button>
+  </div>
+
+  <div id="controls">
+    <button id="startStopBtn" onclick="startStopTimer()">
+      <img id="startStopIcon" src="/images/play.png" alt="Play" width="140">
+    </button>
+
+    <button onclick="resetTimer()"><img id="resetIcon" src="/images/reset.png" alt="Reset" width="140"></button>
+  </div>
+
+  <script>
+    var totalSeconds = 0;
+    var maxSeconds = 3600;
+    var interval = null;
+    var flashInterval = null;
+    var running = false;
+
+    function pad(n) {
+      return (n < 10 ? '0' : '') + n;
+    }
+
+    function updateDisplay() {
+      var mins = pad(Math.floor(totalSeconds / 60));
+      var secs = pad(totalSeconds % 60);
+      document.getElementById('timer').textContent = mins + ":" + secs;
+    }
+
+    function addMinutes(mins) {
+      if (running) return;
+      totalSeconds += mins * 60;
+      if (totalSeconds > maxSeconds) totalSeconds = maxSeconds;
+      updateDisplay();
+    }
+
+    function startStopTimer() {
+      var btnIcon = document.getElementById('startStopIcon');
+
+      if (!running) {
+        interval = setInterval(function () {
+          if (totalSeconds > 0) {
+            totalSeconds--;
+            updateDisplay();
+          } else {
+            clearInterval(interval);
+            running = false;
+            btnIcon.src = '/images/play.png';
+            btnIcon.alt = 'Play';
+            startFlashing();
+          }
+        }, 1000);
+        running = true;
+        btnIcon.src = '/images/pause.png';
+        btnIcon.alt = 'Pause';
+      } else {
+        clearInterval(interval);
+        running = false;
+        btnIcon.src = '/images/play.png';
+        btnIcon.alt = 'Play';
+      }
+    }
+
+
+    function resetTimer() {
+      clearInterval(interval);
+      stopFlashing();
+      totalSeconds = 0;
+      running = false;
+      updateDisplay();
+    }
+
+    function startFlashing() {
+      var isBlack = false;
+      flashInterval = setInterval(function () {
+        document.body.style.backgroundColor = isBlack ? 'white' : 'black';
+        document.body.style.color = isBlack ? 'black' : 'white';
+        isBlack = !isBlack;
+      }, 500);
+    }
+
+    function stopFlashing() {
+      clearInterval(flashInterval);
+      flashInterval = null;
+      document.body.style.backgroundColor = 'white';
+      document.body.style.color = 'black';
+    }
+
+    document.addEventListener('click', function () {
+      if (flashInterval) {
+        stopFlashing();
+      }
+    });
+
+    updateDisplay();
+  </script>
+</body>
+</html>

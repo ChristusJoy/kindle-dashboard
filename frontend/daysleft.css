@@ -1,0 +1,51 @@
+#nav {
+    padding: 10px;
+    margin-top: 50px;
+    text-align: center;
+    font-size: 40px;
+}
+
+
+#nav a {
+    text-decoration: none;
+    font-size: 60px;
+    display: inline-block;
+    margin: 0 50px;
+}
+
+
+.section {
+    padding-left:80px;
+    margin: 1.5rem 0;
+    width: 80%;
+    max-width: 1300px;
+    padding-bottom: 120px;
+}
+
+.label {
+    font-size: 2.3rem;
+    margin-bottom: 0.5rem;
+}
+
+.label span{
+    font-size: 6rem
+}
+.progress-container {
+    background: #ffffff;
+    border: 3px solid #000000;
+    border-color: black;
+    overflow: hidden;
+    height: 60px;
+    margin-bottom: 0.5rem;
+}
+
+.progress-bar {
+    background: #666565;
+    height: 100%;
+    width: 0%;
+}
+
+.count {
+    font-size: 1rem;
+    font-weight: bold;
+}

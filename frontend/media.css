@@ -1,0 +1,60 @@
+#nav {
+  padding: 10px;
+  margin-top: 50px;
+  text-align: center;
+  font-size: 40px;
+}
+
+
+#nav a {
+  text-decoration: none;
+  font-size: 60px;
+  display: inline-block;
+  margin: 0 50px;
+}
+
+#music-playback {
+  padding:30px;
+  padding-top: 90px;
+  text-align: center;
+}
+
+
+#track-info {
+    display: inline-block;
+    border-radius:30px;
+    font-size: 30px;
+    
+}
+#track-image{
+  padding:30px;
+  padding-bottom: 10px;
+  padding-top: 0px;
+}
+#track-title{
+  padding:10px;
+  max-width: 700px;
+  padding-left: 45px;
+}
+#track-info div {
+    text-align: left;
+}
+#track-name{
+  font-size: 50px;
+}
+#track-artist{
+  font-size: 30px;
+}
+#playback-control {
+  display: inline-block;
+  margin-top: 20px;
+  border-radius:40px;
+  text-align: center;
+}
+#playback-control button{
+  padding:41px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border:0px;
+  background-color: transparent;
+}

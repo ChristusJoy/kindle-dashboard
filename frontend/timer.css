@@ -1,0 +1,45 @@
+#nav {
+  padding: 10px;
+  margin-top: 50px;
+  text-align: center;
+  font-size: 40px;
+}
+
+
+#nav a {
+  text-decoration: none;
+  font-size: 60px;
+  display: inline-block;
+  margin: 0 50px;
+}
+
+#timer,
+#time-buttons,
+#controls
+{
+    text-align: center;
+    padding:20px;
+}
+#timer{
+    font-size: 130px;
+}
+
+#time-buttons button{
+    width: 200px;
+    height: 200px;
+    margin: 30px;
+    display: inline-block;
+    background-color: transparent;
+    border: 4px solid #000;
+    border-radius: 40px;
+    padding:30px;
+}
+
+#controls button{
+    display: inline-block;
+    background-color: transparent;
+    padding:30px;
+    border:0px;
+    margin-bottom: 30px;
+}
+
